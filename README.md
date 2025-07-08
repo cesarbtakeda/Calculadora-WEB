@@ -13,8 +13,8 @@ https://calculadora-medias-universitarias.netlify.app/
 
 -
 - ![image](https://github.com/user-attachments/assets/0cf98d02-0518-4d42-8f45-77cc0311b21d)
--
-#
+
+
 
 
 ## 📜 License(LICENSE)
