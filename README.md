@@ -1,19 +1,25 @@
 # 🔢 Calculadora Web Facens
 ## Desenvolvido por Matheus e Cesar
 
-
+## Dominio
+https://calculadora-medias-universitarias.netlify.app/
 
 
 ## ⚠️ PROHIBITED:
-- Unauthorized access
+- E proibida a copia e a venda do projeto.
 
 
 ##  IMAGES 
+#
+-
+- ![image](https://github.com/user-attachments/assets/0cf98d02-0518-4d42-8f45-77cc0311b21d)
+-
 
 
 
 ## 📜 License(LICENSE)
-[![MIT License](https://img.shields.io/badge/License-MIT-red.svg)](https://github.com/cesarbtakeda/Calculadora-Web-Facens/blob/main/LICENSE)
+
+![image](https://github.com/user-attachments/assets/3ed7aea8-871c-4d48-bc8d-349549db4680)
 
 
 ##  Reports 📱
