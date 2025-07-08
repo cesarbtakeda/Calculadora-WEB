@@ -25,11 +25,11 @@
                 <form id="formNotas" action="#" method="post">
                     <input type="hidden" id="csrf_token" name="csrf_token" value="">
 
-                    <div id="materiasContainer"  maxlength="50">
+                    <div id="materiasContainer">
                         <div class="materia visible" id="materia1">
                             <h2>Matéria 1</h2>
                             <div class="materia-nome-container">
-                                <input type="text" name="materia1_nome" placeholder="Nome da matéria" required aria-label="Nome da matéria 1">
+                                <input type="text" maxlength="50" name="materia1_nome" placeholder="Nome da matéria" required aria-label="Nome da matéria 1">
                             </div>
                             <div class="notas">
                                 <input type="number" name="materia1_nota1" placeholder="AC1" min="0" step="0.01" required aria-label="Nota AC1" >
