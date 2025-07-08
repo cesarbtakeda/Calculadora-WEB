@@ -1,8 +1,9 @@
-// Configurações iniciais
+
 let materiasAdicionadas = 1;
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', function() {
+    
     // Configurações de segurança
     const csrfToken = generateCsrfToken();
     document.getElementById('csrf_token').value = csrfToken;
