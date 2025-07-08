@@ -19,7 +19,7 @@ https://calculadora-medias-universitarias.netlify.app/
 
 ## 📜 License(LICENSE)
 
-![image](https://github.com/user-attachments/assets/3ed7aea8-871c-4d48-bc8d-349549db4680)
+
 
 
 ##  Reports 📱
