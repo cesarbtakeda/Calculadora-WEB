@@ -18,7 +18,7 @@ https://calculadora-medias-universitarias.netlify.app/
 
 
 ## 📜 License(LICENSE)
-
+[![MIT License](https://img.shields.io/badge/License-MIT-red.svg)](https://github.com/cesarbtakeda/Calculadora-Web-Facen/blob/main/LICENSE)
 
 
 
