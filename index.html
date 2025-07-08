@@ -15,7 +15,7 @@ header_remove('X-Powered-By'); // Garante remoção de X-Powered-By
 
 // Validação de origem (CORS)
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
-$allowed_origins = ['https://*.trycloudflare.com', 'https://localhost'];
+$allowed_origins = ['https://calculadora-medias-universitarias.netlify.app/', 'https://localhost'];
 if ($origin && in_array($origin, $allowed_origins)) {
     header("Access-Control-Allow-Origin: $origin");
     header("Access-Control-Allow-Credentials: true");
