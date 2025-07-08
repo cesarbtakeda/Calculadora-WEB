@@ -1,107 +1,3 @@
-<?php
-// Desativar exposição de informações do servidor
-ini_set('expose_php', 'off'); // Remove X-Powered-By
-ini_set('display_errors', 0);
-ini_set('display_startup_errors', 0);
-error_reporting(0);
-
-// Configuração de headers de segurança
-header('X-Content-Type-Options: nosniff');
-header('X-Frame-Options: DENY');
-header('X-XSS-Protection: 1; mode=block');
-header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;");
-header('Server: WebServer'); // Ofusca a assinatura do servidor
-header_remove('X-Powered-By'); // Garante remoção de X-Powered-By
-
-// Validação de origem (CORS)
-$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
-$allowed_origins = ['https://calculadora-medias-universitarias.netlify.app/', 'https://localhost'];
-if ($origin && in_array($origin, $allowed_origins)) {
-    header("Access-Control-Allow-Origin: $origin");
-    header("Access-Control-Allow-Credentials: true");
-    header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-    header("Access-Control-Allow-Headers: Content-Type, Authorization");
-}
-
-// Validação de User-Agent e cabeçalhos para bloquear recon (Nmap, etc.)
-$user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
-$blocked_user_agents = [
-    'nmap', 'masscan', 'zmap', 'curl', 'wget', 'python-requests', 'libwww-perl', 'bot', 'spider', 'crawler'
-];
-$has_valid_headers = isset($_SERVER['HTTP_ACCEPT']) && isset($_SERVER['HTTP_CONNECTION']);
-if (empty($user_agent) || !$has_valid_headers || stripos($user_agent, 'mozilla') === false) {
-    foreach ($blocked_user_agents as $blocked) {
-        if (stripos($user_agent, $blocked) !== false || empty($user_agent)) {
-            http_response_code(403);
-            die('Acesso bloqueado.');
-        }
-    }
-}
-
-// Validação de rotas
-$request_uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$rotas_validas = ['/', '/home', '/sobre', '/contato'];
-if (!in_array($request_uri, $rotas_validas)) {
-    http_response_code(404);
-    include __DIR__ . '/404.html';
-    exit;
-}
-
-// Proteção CSRF com expiração de token
-session_start();
-$csrf_expiry = 3600; // 1 hora
-if (!isset($_SESSION['csrf_token']) || !isset($_SESSION['csrf_time']) || time() - $_SESSION['csrf_time'] > $csrf_expiry) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-    $_SESSION['csrf_time'] = time();
-}
-$csrf_token = $_SESSION['csrf_token'];
-
-// Rate limiting para requisições POST
-$ip = $_SERVER['REMOTE_ADDR'];
-$cache_file = __DIR__ . '/cache/rate_limit_' . md5($ip) . '.txt';
-$max_requests = 10; // Máximo de requisições por minuto
-$time_window = 60; // 1 minuto
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (file_exists($cache_file)) {
-        $data = json_decode(file_get_contents($cache_file), true);
-        $timestamp = $data['timestamp'] ?? 0;
-        $count = $data['count'] ?? 0;
-        if (time() - $timestamp < $time_window) {
-            if ($count >= $max_requests) {
-                http_response_code(429);
-                die('Muitas requisições. Tente novamente mais tarde.');
-            }
-            $count++;
-        } else {
-            $count = 1;
-            $timestamp = time();
-        }
-    } else {
-        $count = 1;
-        $timestamp = time();
-    }
-    file_put_contents($cache_file, json_encode(['count' => $count, 'timestamp' => $timestamp]));
-}
-
-// Sanitização de entrada
-function sanitizeInput($data) {
-    return htmlspecialchars(strip_tags(trim($data)), ENT_QUOTES, 'UTF-8');
-}
-
-// Validação de POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-        http_response_code(403);
-        die('Erro: Token CSRF inválido.');
-    }
-    // Sanitizar entradas
-    foreach ($_POST as $key => $value) {
-        $_POST[$key] = sanitizeInput($value);
-    }
-}
-?>
-
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -109,6 +5,97 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Calculadora de Média - Facens</title>
+    <script>
+        // Configurações de segurança e funcionalidades que eram em PHP
+        document.addEventListener('DOMContentLoaded', function() {
+            // Gerar token CSRF
+            const csrfToken = generateCsrfToken();
+            document.getElementById('csrf_token').value = csrfToken;
+            
+            // Configurações de segurança
+            disableErrorDisplay();
+            setSecurityHeaders();
+            validateOrigin();
+            validateUserAgent();
+            
+            // Verificar tema salvo
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+        });
+
+        function generateCsrfToken() {
+            const randomBytes = new Uint8Array(32);
+            window.crypto.getRandomValues(randomBytes);
+            return Array.from(randomBytes, byte => byte.toString(16).padStart(2, '0')).join('');
+        }
+
+        function disableErrorDisplay() {
+            // Simulação - em PHP desativava a exibição de erros
+            console.log = function() {};
+            console.error = function() {};
+            console.warn = function() {};
+        }
+
+        function setSecurityHeaders() {
+            // Em um ambiente real, esses headers devem ser configurados no servidor
+            console.log('Headers de segurança configurados (simulação)');
+        }
+
+        function validateOrigin() {
+            const allowedOrigins = [
+                'https://calculadora-medias-universitarias.netlify.app/', 
+                'https://localhost'
+            ];
+            
+            if (!allowedOrigins.includes(window.location.origin) {
+                console.warn('Origem não permitida');
+                // Em produção, você pode redirecionar ou bloquear o acesso
+            }
+        }
+
+        function validateUserAgent() {
+            const blockedAgents = [
+                'nmap', 'masscan', 'zmap', 'curl', 'wget', 
+                'python-requests', 'libwww-perl', 'bot', 'spider', 'crawler'
+            ];
+            
+            const userAgent = navigator.userAgent.toLowerCase();
+            
+            if (blockedAgents.some(agent => userAgent.includes(agent))) {
+                document.body.innerHTML = '<h1>Acesso bloqueado</h1>';
+                throw new Error('Acesso bloqueado');
+            }
+        }
+
+        // Implementação simplificada de rate limiting usando localStorage
+        function checkRateLimit() {
+            const now = Date.now();
+            const windowMs = 60000; // 1 minuto
+            const maxRequests = 10;
+            
+            let requestData = JSON.parse(localStorage.getItem('rateLimit') || '{"count":0,"timestamp":0}');
+            
+            if (now - requestData.timestamp > windowMs) {
+                requestData = {count: 1, timestamp: now};
+            } else if (requestData.count >= maxRequests) {
+                alert('Muitas requisições. Tente novamente mais tarde.');
+                return false;
+            } else {
+                requestData.count++;
+            }
+            
+            localStorage.setItem('rateLimit', JSON.stringify(requestData));
+            return true;
+        }
+
+        function sanitizeInput(input) {
+            if (!input) return '';
+            return input.toString()
+                .replace(/</g, "&lt;").replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+        }
+    </script>
     <style>
         * {
             box-sizing: border-box;
@@ -536,7 +523,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="content-wrapper">
             <main class="main-content">
                 <form id="formNotas" action="#" method="post">
-                    <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>">
+                    <input type="hidden" id="csrf_token" name="csrf_token" value="">
 
                     <div id="materiasContainer">
                         <div class="materia visible" id="materia1">
@@ -700,10 +687,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('theme') === 'dark') {
-                document.body.classList.add('dark-mode');
+        // Adicionar event listener para o formulário
+        document.getElementById('formNotas').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!checkRateLimit()) return;
+            
+            // Sanitizar todas as entradas
+            const inputs = document.querySelectorAll('input[type="text"], input[type="number"]');
+            inputs.forEach(input => {
+                input.value = sanitizeInput(input.value);
+            });
+            
+            // Verificar token CSRF
+            const formToken = document.getElementById('csrf_token').value;
+            if (!formToken) {
+                showFeedback('Erro de segurança. Recarregue a página.');
+                return;
             }
+            
+            // Aqui você pode adicionar o código para enviar os dados
+            showFeedback('Cálculos realizados com sucesso!');
         });
     </script>
 </body>
