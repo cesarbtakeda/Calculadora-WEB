@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Calculadora de Média - Facens</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="images/logo.png" alt="Logo CMU" width="200" loading="lazy">
+            <h1>Calculadora de Média Universitária - Facens</h1>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <span class="sun-icon">☀️</span>
+                <span class="moon-icon">🌙</span>
+            </button>
+        </header>
+
+        <div class="ad-banner-top">Espaço para anúncio topo</div>
+
+        <div class="content-wrapper">
+            <main class="main-content">
+                <form id="formNotas" action="#" method="post">
+                    <input type="hidden" id="csrf_token" name="csrf_token" value="">
+
+                    <div id="materiasContainer">
+                        <div class="materia visible" id="materia1">
+                            <h2>Matéria 1</h2>
+                            <div class="materia-nome-container">
+                                <input type="text" name="materia1_nome" placeholder="Nome da matéria" required aria-label="Nome da matéria 1">
+                            </div>
+                            <div class="notas">
+                                <input type="number" name="materia1_nota1" placeholder="AC1" min="0" step="0.01" required aria-label="Nota AC1">
+                                <input type="number" name="materia1_nota2" placeholder="AC2" min="0" step="0.01" required aria-label="Nota AC2">
+                                <input type="number" name="materia1_nota3" placeholder="PA" min="0" step="0.01" required aria-label="Nota PA">
+                                <input type="number" name="materia1_nota4" placeholder="AG" min="0" step="0.01" required aria-label="Nota AG">
+                                <input type="number" name="materia1_nota5" placeholder="AS" min="0" step="0.01" aria-label="Nota AS">
+                                <input type="text" name="materia1_media" class="media" placeholder="Média" readonly aria-label="Média da matéria 1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" id="adicionarMateriaBtn">Adicionar matéria</button>
+                    <button type="button" id="removerMateriaBtn">Remover matéria</button>
+                    <p id="msg" class="feedback"></p>
+                </form>
+
+                <h2>Média Geral</h2>
+                <p id="mediaGeral" style="font-size: 22px;">-</p>
+            </main>
+
+            <aside class="ad-banner-side">Espaço para anúncio lateral</aside>
+        </div>
+
+        <footer>
+            © 2025 Calculadora de Média - Todos os direitos reservados
+        </footer>
+    </div>
+
+    <div id="popupAd">
+        <span class="fechar" id="fecharPopupBtn">×</span>
+        Espaço para anúncio no mobile
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
