@@ -1,0 +1,27 @@
+User-agent: *
+Disallow: /
+
+# Bloquear crawlers específicos
+User-agent: Nmap
+Disallow: /
+User-agent: Masscan
+Disallow: /
+User-agent: Zmap
+Disallow: /
+User-agent: Bot
+Disallow: /
+User-agent: Spider
+Disallow: /
+User-agent: Crawler
+Disallow: /
+
+# Bloquear acesso a arquivos sensíveis
+Disallow: /cache/
+Disallow: /images/
+Disallow: /*.php$
+Disallow: /*.txt$
+Disallow: /*.log$
+Disallow: /*.ini$
+Disallow: /*.conf$
+Disallow: /*.sql$
+Disallow: /*.env$
