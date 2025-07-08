@@ -1,0 +1,408 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --cor-primaria: #4B0082;
+    --cor-primaria-clara: #6a0dad;
+    --cor-fundo: #f4f0f8;
+    --cor-texto: #2d003d;
+    --cor-borda: #a674c2;
+    --cor-input: #e8dff1;
+    --cor-icone: #4B0082;
+    --cor-fundo-escuro: #2d003d;
+    --cor-texto-escuro: #f4f0f8;
+    --cor-input-escuro: #4B0082;
+    --cor-borda-escura: #6a0dad;
+}
+
+body {
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.5;
+    padding: 20px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode {
+    background: var(--cor-fundo-escuro);
+    color: var(--cor-texto-escuro);
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(75, 0, 130, 0.1);
+    padding: 20px 40px 40px;
+    transition: background 0.3s ease;
+}
+
+body.dark-mode .container {
+    background: #3c0061;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+header h1 {
+    font-weight: 700;
+    color: var(--cor-primaria);
+    font-size: 2.4rem;
+    letter-spacing: 1.2px;
+}
+
+body.dark-mode header h1 {
+    color: var(--cor-texto-escuro);
+}
+
+.theme-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--cor-primaria);
+    transition: color 0.3s ease;
+}
+
+body.dark-mode .theme-toggle {
+    color: var(--cor-texto-escuro);
+}
+
+.theme-toggle .sun-icon {
+    display: inline;
+}
+
+.theme-toggle .moon-icon {
+    display: none;
+}
+
+body.dark-mode .theme-toggle .sun-icon {
+    display: none;
+}
+
+body.dark-mode .theme-toggle .moon-icon {
+    display: inline;
+}
+
+.ad-banner-top,
+.ad-banner-side {
+    background: linear-gradient(135deg, var(--cor-input), #f0e6f6);
+    border: 2px dashed var(--cor-borda);
+    color: var(--cor-primaria);
+    font-style: italic;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+}
+
+body.dark-mode .ad-banner-top,
+body.dark-mode .ad-banner-side {
+    background: linear-gradient(135deg, var(--cor-input-escuro), #3c0061);
+    border: 2px dashed var(--cor-borda-escura);
+    color: var(--cor-texto-escuro);
+}
+
+.ad-banner-top {
+    width: 100%;
+    height: 90px;
+    margin-bottom: 25px;
+}
+
+.ad-banner-side {
+    width: 200px;
+    height: 600px;
+    position: sticky;
+    top: 20px;
+}
+
+.content-wrapper {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.main-content {
+    flex: 1;
+}
+
+form {
+    background: #fff;
+    padding: 20px 25px;
+    border-radius: 6px;
+    border: 1px solid var(--cor-borda);
+    transition: background 0.3s ease, border 0.3s ease;
+}
+
+body.dark-mode form {
+    background: #3c0061;
+    border: 1px solid var(--cor-borda-escura);
+}
+
+.materia {
+    border-bottom: 1px solid var(--cor-borda);
+    padding-bottom: 18px;
+    margin-bottom: 18px;
+    transition: all 0.3s ease;
+}
+
+body.dark-mode .materia {
+    border-bottom: 1px solid var(--cor-borda-escura);
+}
+
+.materia:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.materia h2 {
+    font-size: 1.3rem;
+    color: var(--cor-primaria-clara);
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+body.dark-mode .materia h2 {
+    color: var(--cor-texto-escuro);
+}
+
+.materia-nome-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, var(--cor-input), #f0e6f6);
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    padding: 5px;
+    margin-bottom: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.dark-mode .materia-nome-container {
+    background: linear-gradient(135deg, var(--cor-input-escuro), #3c0061);
+    border: 1px solid var(--cor-borda-escura);
+}
+
+.materia-nome-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(75, 0, 130, 0.2);
+}
+
+body.dark-mode .materia-nome-container:hover {
+    box-shadow: 0 2px 8px rgba(244, 240, 248, 0.2);
+}
+
+.materia-nome-container::before {
+    content: "📚";
+    font-size: 1.2rem;
+    margin-right: 8px;
+    color: var(--cor-icone);
+}
+
+body.dark-mode .materia-nome-container::before {
+    color: var(--cor-texto-escuro);
+}
+
+.materia-nome-container input {
+    border: none;
+    background: transparent;
+    width: 100%;
+    padding: 8px;
+    font-size: 1rem;
+    color: var(--cor-texto);
+}
+
+body.dark-mode .materia-nome-container input {
+    color: var(--cor-texto-escuro);
+}
+
+.materia-nome-container input:focus {
+    outline: none;
+}
+
+.notas {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 12px;
+}
+
+.notas input {
+    width: 60px;
+    padding: 6px 8px;
+    font-size: 1rem;
+    text-align: center;
+    border: 1px solid var(--cor-borda);
+    border-radius: 4px;
+    background: linear-gradient(135deg, var(--cor-input), #f0e6f6);
+    color: var(--cor-texto);
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.dark-mode .notas input {
+    border: 1px solid var(--cor-borda-escura);
+    background: linear-gradient(135deg, var(--cor-input-escuro), #3c0061);
+    color: var(--cor-texto-escuro);
+}
+
+.notas input:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(75, 0, 130, 0.2);
+}
+
+body.dark-mode .notas input:hover {
+    box-shadow: 0 2px 8px rgba(244, 240, 248, 0.2);
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+button {
+    background: var(--cor-primaria);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+body.dark-mode button {
+    background: var(--cor-primaria-clara);
+}
+
+button:hover {
+    background: var(--cor-primaria-clara);
+}
+
+body.dark-mode button:hover {
+    background: var(--cor-primaria);
+}
+
+.media {
+    font-weight: bold;
+    background: var(--cor-input);
+}
+
+body.dark-mode .media {
+    background: var(--cor-input-escuro);
+    color: var(--cor-texto-escuro);
+}
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    color: var(--cor-primaria-clara);
+}
+
+body.dark-mode footer {
+    color: var(--cor-texto-escuro);
+}
+
+img {
+    float: left;
+    margin-right: 10px;
+}
+
+#popupAd {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #f0e6f6, var(--cor-input));
+    border: 2px solid var(--cor-borda);
+    padding: 15px;
+    color: var(--cor-primaria);
+    border-radius: 10px;
+    font-style: italic;
+    font-size: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+body.dark-mode #popupAd {
+    background: linear-gradient(135deg, #3c0061, var(--cor-input-escuro));
+    border: 2px solid var(--cor-borda-escura);
+    color: var(--cor-texto-escuro);
+}
+
+#popupAd .fechar {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 20px;
+    color: var(--cor-primaria);
+    cursor: pointer;
+}
+
+body.dark-mode #popupAd .fechar {
+    color: var(--cor-texto-escuro);
+}
+
+.feedback {
+    color: var(--cor-primaria);
+    font-size: 0.9rem;
+    margin-top: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+body.dark-mode .feedback {
+    color: var(--cor-texto-escuro);
+}
+
+.feedback.visible {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .ad-banner-side {
+        display: none;
+    }
+
+    #popupAd {
+        display: block;
+    }
+
+    .content-wrapper {
+        flex-direction: column;
+    }
+
+    header h1 {
+        font-size: 1.6rem;
+    }
+
+    form {
+        padding: 15px;
+    }
+
+    .notas {
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .notas input {
+        width: 48%;
+        min-width: 100px;
+    }
+}
